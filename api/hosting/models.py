@@ -3,11 +3,11 @@ from sqlalchemy import String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
-from db.base import BaseDBModel
+from db.base import TimedBaseModel
 from api.user.models import User
 
 
-class Video(BaseDBModel):
+class Video(TimedBaseModel):
     __tablename__ = 'video'
     
     id: Mapped[int] = mapped_column(primary_key=True)
