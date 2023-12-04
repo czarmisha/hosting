@@ -5,7 +5,9 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from db.base import BaseDBModel
+# from db.base import BaseDBModel
+from api.user.models import User
+from api.hosting.models import Video
 from dotenv import load_dotenv
 
 # this is the Alembic Config object, which provides
@@ -32,7 +34,7 @@ config.set_section_option(section, "DATABASE_URL", os.environ.get("DATABASE_URL"
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = BaseDBModel.metadata
+target_metadata = [User.metadata, Video.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
