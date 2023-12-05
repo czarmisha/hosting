@@ -13,5 +13,4 @@ class UserRepo(SQLAlchemyRepo):
         user = await self._session.scalar(stmt)
 
         await self._session.commit()
-        print(user)
         return schemas.UserOut.model_validate(user)

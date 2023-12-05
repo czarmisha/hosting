@@ -1,21 +1,16 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from src.schemas.user import User
 
 
-class VideoInfo(BaseModel):
+class VideoIn(BaseModel):
     title: str
     description: str
 
 
-class UploadVideoInfo(VideoInfo):
-    pass
+class VideoOut(VideoIn):
+    model_config = ConfigDict(from_attributes=True)
 
-
-class DBVideoInfo(VideoInfo):
     id: int
-    
-
-class UserVideoInfo(BaseModel):
+    path: str
     user: User
-    video_info: DBVideoInfo
