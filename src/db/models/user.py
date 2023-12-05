@@ -6,9 +6,9 @@ from .hosting import Video
 
 
 class User(TimedBaseModel):
-    __tablename__ = 'user'
-    
+    __tablename__ = "user"
+
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(50), unique=True)
 
-    videos: Mapped[list[Video]] = relationship(back_populates='user')
+    videos: Mapped[list[Video]] = relationship("Video", back_populates="user")
