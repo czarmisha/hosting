@@ -19,10 +19,10 @@ class VideoRepo(SQLAlchemyRepo):
                 user_id=user_id,
                 **video_in.model_dump(),
             )
-        )
-        # .options(joinedload(Video.user))
+        ).options(joinedload(Video.user))
 
         video = await self._session.scalar(stmt)
 
         await self._session.commit()
+        await self._session.refresh(video)
         return schemas.VideoOut.model_validate(video)
