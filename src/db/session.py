@@ -13,6 +13,6 @@ if os.path.exists(dotenv_path):
 engine = create_engine(os.environ.get("DATABASE_URL"))
 
 
-def get_db():
+def create_session():
     with Session(engine) as session:
         return session

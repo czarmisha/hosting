@@ -1,14 +1,13 @@
 import shutil
 from fastapi import APIRouter, UploadFile, Form, Request
 from typing import Annotated
-from api.hosting.schemas import UploadVideoInfo
+from src.schemas.hosting import UploadVideoInfo
 
-hosting_app = APIRouter()
+hosting_router = APIRouter()
 
 
-@hosting_app.post('/upload')
+@hosting_router.post('/upload')
 async def root(
-    req: Request,
     title: Annotated[str, Form()],
     description: Annotated[str, Form()],
     file: UploadFile
