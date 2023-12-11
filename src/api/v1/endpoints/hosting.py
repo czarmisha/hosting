@@ -8,7 +8,6 @@ from fastapi import (
     Header,
     HTTPException,
     Request,
-    Response,
     UploadFile,
     status,
 )
@@ -53,6 +52,8 @@ async def get_streaming_vide(
 
 
 @hosting_router.get("/")
-async def read_root(request: Request):
-    # TODO: return for example last 5 videos(id, title and description)
-    return templates.TemplateResponse("index.html", context={"request": request})
+async def read_root(request: Request, repo: VideoRepo = Depends(get_repo(VideoRepo))):
+    videos = await repo.get_videos()
+    return templates.TemplateResponse(
+        "index.html", context={"request": request, "videos": videos}
+    )

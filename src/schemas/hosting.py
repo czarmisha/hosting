@@ -16,3 +16,9 @@ class VideoOut(VideoIn):
     description: str
     path: str
     user: User
+
+
+class VideosOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    videos: list[VideoOut]

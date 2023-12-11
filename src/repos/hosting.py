@@ -1,4 +1,4 @@
-from sqlalchemy import insert, select
+from sqlalchemy import desc, insert, select
 from sqlalchemy.orm import joinedload
 
 from src.db.models.hosting import Video
@@ -28,8 +28,24 @@ class VideoRepo(SQLAlchemyRepo):
         return schemas.VideoOut.model_validate(video)
 
     async def get_by_id(self, id: int) -> schemas.VideoOut:
-        stmt = select(Video).where(Video.id == id).options(joinedload(Video.user))
-        video = await self._session.scalar(stmt)
-        await self._session.refresh(video)
+        query = select(Video).where(Video.id == id).options(joinedload(Video.user))
+        video = await self._session.scalar(query)
+        # await self._session.refresh(video)
 
         return schemas.VideoOut.model_validate(video)
+
+    async def get_videos(
+        self, limit: int = 5, offset: int = 0
+    ) -> list[schemas.VideosOut]:
+        query = (
+            select(Video)
+            .order_by(desc(Video.created_at))
+            .limit(limit)
+            .offset(offset)
+            .options(joinedload(Video.user))
+        )
+        videos = await self._session.scalars(query)
+        print("!!!!!!!", videos)
+        # await self._session.refresh(videos)
+
+        return [schemas.VideoOut.model_validate(video) for video in videos]
