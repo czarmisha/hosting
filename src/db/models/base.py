@@ -14,7 +14,9 @@ class TimedBaseModel(BaseDBModel):
 
     __abstract__ = True
 
-    created_at: Mapped[datetime.datetime] = mapped_column(nullable=False, server_default=sql.func.now())
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        nullable=False, server_default=sql.func.now()
+    )
     updated_at: Mapped[datetime.datetime] = mapped_column(
         nullable=False,
         server_default=sql.func.now(),

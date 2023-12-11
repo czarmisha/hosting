@@ -1,4 +1,4 @@
-from sqlalchemy import insert
+from sqlalchemy import insert, select
 from sqlalchemy.orm import joinedload
 
 from src.db.models.hosting import Video
@@ -25,4 +25,11 @@ class VideoRepo(SQLAlchemyRepo):
 
         await self._session.commit()
         await self._session.refresh(video)
+        return schemas.VideoOut.model_validate(video)
+
+    async def get_by_id(self, id: int) -> schemas.VideoOut:
+        stmt = select(Video).where(Video.id == id).options(joinedload(Video.user))
+        video = await self._session.scalar(stmt)
+        await self._session.refresh(video)
+
         return schemas.VideoOut.model_validate(video)
