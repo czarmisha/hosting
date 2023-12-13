@@ -2,9 +2,8 @@ import os
 import time
 from pathlib import Path
 
-from dotenv import load_dotenv
 from celery import Celery
-
+from dotenv import load_dotenv
 
 _BASE_DIR = Path(__file__).resolve().parent
 dotenv_path = os.path.join(_BASE_DIR, "core/.env")

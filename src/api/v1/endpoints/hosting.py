@@ -1,6 +1,7 @@
 import shutil
-import aiofiles
 
+import aiofiles
+from celery.result import AsyncResult
 from fastapi import (
     APIRouter,
     Depends,
@@ -14,13 +15,12 @@ from fastapi import (
 )
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
-from celery.result import AsyncResult
 
 from src.deps.repo import get_repo
-from src.tasks.hosting import test_task
 from src.repos.hosting import VideoRepo
 from src.schemas import hosting as schemas
 from src.services.hosting import read_video_range
+from src.tasks.hosting import test_task
 
 hosting_router = APIRouter()
 templates = Jinja2Templates(directory="src/templates")
