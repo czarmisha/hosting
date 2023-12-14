@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from src.api.v1.endpoints.hosting import hosting_router
 from src.api.v1.endpoints.user import user_router
+from src.core.settings import settings
 
 app = FastAPI()
 

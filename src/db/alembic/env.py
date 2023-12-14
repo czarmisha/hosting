@@ -1,24 +1,18 @@
 import asyncio
 import os
 from logging.config import fileConfig
-from pathlib import Path
 
 from alembic import context
-from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import AsyncEngine
 
 from src.db.models.base import BaseDBModel
+from src.core.settings import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-
-_BASE_DIR = Path(__file__).resolve().parent.parent.parent
-dotenv_path = os.path.join(_BASE_DIR, "core/.env")
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -29,7 +23,7 @@ if config.config_file_name is not None:
 #     "DATABASE_URL": os.environ["DATABASE_URL"],
 # })
 section = config.config_ini_section
-config.set_section_option(section, "DATABASE_URL", os.environ.get("DATABASE_URL"))
+config.set_section_option(section, "DATABASE_URL", settings.database_url)
 
 # add your model's MetaData object here
 # for 'autogenerate' support
