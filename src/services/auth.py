@@ -27,7 +27,7 @@ class Authenticator:
             )
             return auth_schemas.TokenPayload(**payload)
         except JWTError:
-            return HTTPException(
+            raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Could not validate credentials",
                 headers={"WWW-Authenticate": "Bearer"},
