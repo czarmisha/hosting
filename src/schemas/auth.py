@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 from src.schemas import user as user_schemas
@@ -8,5 +10,10 @@ class Token(BaseModel):
     token_type: str = "Bearer"
 
 
+class TokenSub(BaseModel):
+    user_id: UUID
+
+
 class TokenPayload(BaseModel):
-    user: user_schemas.UserOut
+    sub: TokenSub
+    exp: int

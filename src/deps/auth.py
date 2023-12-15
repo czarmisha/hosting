@@ -1,4 +1,3 @@
-from jose import jwt, JWTError
 from fastapi import Depends
 
 from src.deps.repo import get_repo

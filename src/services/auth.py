@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timedelta
 
 from jose import jwt, JWTError
@@ -41,7 +42,7 @@ class Authenticator:
 
     def create_access_token(self, user: User) -> str:
         to_encode = {
-            "sub": auth_schemas.TokenPayload(user=user).model_dump_json(),
+            "sub": {"user_id": str(user.id)},
             "exp": datetime.utcnow()
             + timedelta(minutes=self._access_token_expires_minutes),
         }
