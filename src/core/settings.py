@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     # redis_dsn: RedisDsn
     database_url: str
     redis_url: str
+    jwt_secret_key: str
 
 
 settings = Settings()

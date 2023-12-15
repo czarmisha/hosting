@@ -11,6 +11,6 @@ class Video(TimedBaseModel):
     title: Mapped[str] = mapped_column(String(30))
     description: Mapped[str] = mapped_column(String(500), nullable=True)
     path: Mapped[str] = mapped_column(String(1000), unique=True)
-    user_id = mapped_column(ForeignKey("user.id"))  # TODO: ondelete
+    user_id = mapped_column(ForeignKey("user.id", ondelete="CASCADE"))  # TODO: ondelete
 
     user = relationship("User", back_populates="videos")

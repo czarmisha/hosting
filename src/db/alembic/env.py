@@ -75,7 +75,7 @@ async def run_async_migrations() -> None:
             prefix="sqlalchemy.",
             poolclass=pool.NullPool,
             future=True,
-            url=os.environ.get("DATABASE_URL"),
+            url=settings.database_url,
         )
     )
 
