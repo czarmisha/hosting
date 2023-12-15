@@ -21,7 +21,7 @@ class UserRepo(SQLAlchemyRepo):
         await self._session.commit()
         return schemas.UserOut.model_validate(user)
 
-    async def get_by_username(self, username: str) -> schemas.UserOut:
+    async def get_by_username(self, username: str) -> User:
         stmt = select(User).where(User.username == username)
 
         result = await self._session.scalar(stmt)
@@ -29,4 +29,4 @@ class UserRepo(SQLAlchemyRepo):
         if result is None:
             return
 
-        return schemas.UserOut.model_validate(result)
+        return result

@@ -1,4 +1,5 @@
 import shutil
+from uuid import UUID
 
 import aiofiles
 from celery.result import AsyncResult
@@ -28,7 +29,7 @@ templates = Jinja2Templates(directory="src/templates")
 
 @hosting_router.post("/upload", status_code=status.HTTP_201_CREATED)
 async def root(
-    user_id: int = Form(),
+    user_id: UUID = Form(),
     title: str = Form(),
     description: str = Form(),
     file: UploadFile = File(),

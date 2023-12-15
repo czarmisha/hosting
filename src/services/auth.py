@@ -41,7 +41,7 @@ class Authenticator:
 
     def create_access_token(self, user: User) -> str:
         to_encode = {
-            "sub": {"id": user.id, "username": user.username},
+            "sub": auth_schemas.TokenPayload(user=user).model_dump_json(),
             "exp": datetime.utcnow()
             + timedelta(minutes=self._access_token_expires_minutes),
         }
@@ -51,7 +51,7 @@ class Authenticator:
     async def authenticate_user(
         self, user_repo: UserRepo, username: str, password: str
     ) -> User | None:
-        user = await user_repo.get_by_username(username, raise_exc=False)
+        user = await user_repo.get_by_username(username)
         if not user:
             return
 

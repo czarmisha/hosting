@@ -11,16 +11,17 @@ user_router = APIRouter()
 
 @user_router.post("/create", status_code=status.HTTP_201_CREATED)
 async def create_user(
-    username: str = Form(),
-    password: str = Form(),
+    # username: str = Form(),
+    # password: str = Form(),
+    user: UserIn,
     auth_service: Authenticator = Depends(),
     user_repo: UserRepo = Depends(get_repo(UserRepo)),
 ) -> UserOut:
 
-    try:
-        user = UserIn(username=username, password=password)
-    except ValidationError:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Validation error")
+    # try:
+    #     user = UserIn(username=username, password=password)
+    # except ValidationError:
+    #     raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Validation error")
 
     hashed_password = auth_service.get_password_hash(user.password)
     user = await user_repo.create(user, hashed_password)

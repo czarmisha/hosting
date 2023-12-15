@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from sqlalchemy import desc, insert, select
 from sqlalchemy.orm import joinedload
 
@@ -9,7 +11,7 @@ from .base import SQLAlchemyRepo
 
 class VideoRepo(SQLAlchemyRepo):
     async def create(
-        self, video_in: schemas.VideoIn, path: str, user_id: int
+        self, video_in: schemas.VideoIn, path: str, user_id: UUID
     ) -> schemas.VideoOut:
         stmt = (
             insert(Video)
