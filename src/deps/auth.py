@@ -10,6 +10,6 @@ async def get_user(
     authenticator: Authenticator = Depends(),
     user_repo: UserRepo = Depends(get_repo(UserRepo)),
 ):
-    user_in = authenticator.validated_token_payload(token)
-    user = await user_repo.get_by_username(user_in.username)
+    user_id = authenticator.validated_token_payload(token).sub
+    user = await user_repo.get_by_id(user_id)
     return user

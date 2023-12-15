@@ -42,7 +42,7 @@ class Authenticator:
 
     def create_access_token(self, user: User) -> str:
         to_encode = {
-            "sub": {"user_id": str(user.id)},
+            "sub": str(user.id),
             "exp": datetime.utcnow()
             + timedelta(minutes=self._access_token_expires_minutes),
         }

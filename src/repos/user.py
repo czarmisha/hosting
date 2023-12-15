@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from sqlalchemy import insert, select
 
 from src.db.models.user import User
@@ -23,6 +25,16 @@ class UserRepo(SQLAlchemyRepo):
 
     async def get_by_username(self, username: str) -> User:
         stmt = select(User).where(User.username == username)
+
+        result = await self._session.scalar(stmt)
+
+        if result is None:
+            return
+
+        return result
+
+    async def get_by_id(self, user_id: UUID) -> User:
+        stmt = select(User).where(User.id == user_id)
 
         result = await self._session.scalar(stmt)
 

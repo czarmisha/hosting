@@ -10,10 +10,10 @@ class Token(BaseModel):
     token_type: str = "Bearer"
 
 
-class TokenSub(BaseModel):
-    user_id: UUID
+# class TokenSub(BaseModel):
+#     user_id: UUID
 
 
 class TokenPayload(BaseModel):
-    sub: TokenSub
+    sub: UUID
     exp: int
