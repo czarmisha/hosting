@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from jose import jwt, JWTError
 from fastapi import status
 from fastapi.exceptions import HTTPException
-from fastapi.security import HTTPBearer
+from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
 from src.schemas import auth as auth_schemas
@@ -16,7 +16,7 @@ class Authenticator:
     _algorithm = "HS256"
     _access_token_expires_minutes = 60
 
-    auth_scheme = HTTPBearer()
+    auth_scheme = OAuth2PasswordBearer(tokenUrl="auth/access-token")
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     _secret_key = settings.jwt_secret_key
 

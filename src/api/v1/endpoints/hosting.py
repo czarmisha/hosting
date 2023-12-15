@@ -18,10 +18,12 @@ from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
 
 from src.deps.repo import get_repo
+from src.deps.auth import get_user
 from src.repos.hosting import VideoRepo
 from src.schemas import hosting as schemas
 from src.services.hosting import read_video_range
 from src.tasks.hosting import test_task
+from src.db.models.user import User
 
 hosting_router = APIRouter()
 templates = Jinja2Templates(directory="src/templates")
@@ -29,10 +31,10 @@ templates = Jinja2Templates(directory="src/templates")
 
 @hosting_router.post("/upload", status_code=status.HTTP_201_CREATED)
 async def root(
-    user_id: UUID = Form(),
     title: str = Form(),
     description: str = Form(),
     file: UploadFile = File(),
+    user: User = Depends(get_user),
     repo: VideoRepo = Depends(get_repo(VideoRepo)),
 ) -> schemas.VideoOut:
     try:
@@ -46,7 +48,7 @@ async def root(
     task = test_task.delay(5)
     print("create task with id:", task)
 
-    video = await repo.create(video_in, path=f"media/{file.filename}", user_id=user_id)
+    video = await repo.create(video_in, path=f"media/{file.filename}", user_id=user.id)
     return video
 
 
