@@ -10,6 +10,11 @@ async def read_video_range(range, path):
     start, end = range.replace("bytes=", "").split("-")
     start = int(start)
     end = int(end) if end else start + CHUNK_SIZE
+    if not os.path.exists(path):
+        return Response(
+            None,
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
     filesize = os.path.getsize(path)
     async with aiofiles.open(path, "rb") as file:
         await file.seek(start)
